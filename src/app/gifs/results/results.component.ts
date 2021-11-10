@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { GifsService } from '../services/gifs.service';
+import { Gif } from '../interface/gif.interface';
 
 @Component({
   selector: 'app-results',
@@ -12,7 +13,7 @@ export class ResultsComponent {
   /**
    * Getter Giphy Results
    */
-  get giphyResults(): any[] {
+  get giphyResults(): Gif[] {
 
     return this.gifsService.giphyResults;
   }    
