@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,7 +6,10 @@ import { Injectable } from '@angular/core';
 })
 export class GifsService {
 
+  // https://developers.giphy.com/docs/api/endpoint#search
+  private giphyApiKey: string = 'pQhHckU8imM19TGhpWwenIcM73uUdWMf';
   private _history: string[] = [];
+  public giphyResults: any[] = [];
 
   /**
    * Getter History
@@ -13,6 +17,10 @@ export class GifsService {
   get history(): string[] {
 
     return [...this._history];
+  }
+
+  constructor (private httpClient: HttpClient) {
+
   }
 
   public addSearchValueToHistory(searchValue : string) : void {
@@ -29,5 +37,12 @@ export class GifsService {
       // Let History of 10 items
       this._history = this._history.splice(0, 10);
     }
+
+    // Make Giphy query
+    this.httpClient.get(`https://api.giphy.com/v1/gifs/search?api_key=pQhHckU8imM19TGhpWwenIcM73uUdWMf&q=${searchValue}}&limit=10`)
+      .subscribe((response : any) => {
+
+        this.giphyResults = response.data;
+      })
   }
 }
