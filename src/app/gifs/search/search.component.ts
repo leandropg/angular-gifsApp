@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { GifsService } from '../services/gifs.service';
 
 @Component({
   selector: 'app-search',
@@ -11,15 +12,21 @@ export class SearchComponent {
   // Obtain instance HTML element
   @ViewChild('txtSearch') txtSearch !: ElementRef<HTMLInputElement>;
 
-  constructor() { }
+  constructor(private gifsService: GifsService) { }
 
   public search() : void {
 
     // Obtain Text to Search
     let txtSearchValue = this.txtSearch.nativeElement.value;
-    console.log(txtSearchValue);
+  
+    // Check if there is a value
+    if(txtSearchValue.trim().length > 0) {
 
-    // Clear Text to Search
-    this.txtSearch.nativeElement.value = '';
+      // Add Search Value to History
+      this.gifsService.addSearchValueToHistory(txtSearchValue);
+
+      // Clear Text to Search
+      this.txtSearch.nativeElement.value = '';
+    }
   }
 }
