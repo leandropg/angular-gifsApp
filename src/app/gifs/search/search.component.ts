@@ -23,7 +23,7 @@ export class SearchComponent {
     if(txtSearchValue.trim().length > 0) {
 
       // Add Search Value to History
-      this.gifsService.addSearchValueToHistory(txtSearchValue);
+      this.gifsService.searchGif(txtSearchValue);
 
       // Clear Text to Search
       this.txtSearch.nativeElement.value = '';

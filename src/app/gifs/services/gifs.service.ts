@@ -32,7 +32,7 @@ export class GifsService {
   }
 
 
-  public addSearchValueToHistory(searchValue : string) : void {
+  public searchGif(searchValue : string) : void {
 
     // Set the value in lowercase
     searchValue = searchValue.trim().toLowerCase();
