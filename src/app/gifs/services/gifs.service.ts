@@ -22,7 +22,15 @@ export class GifsService {
 
   constructor (private httpClient: HttpClient) {
 
+    // Obtain Local Storage
+    /*if (localStorage.getItem('history') != null) {
+
+      this._history = JSON.parse(localStorage.getItem('history')!);
+    }*/
+    this._history = JSON.parse(localStorage.getItem('history')!) || [];
+    this.giphyResults = JSON.parse(localStorage.getItem('giphyResults')!) || [];
   }
+
 
   public addSearchValueToHistory(searchValue : string) : void {
 
@@ -37,13 +45,20 @@ export class GifsService {
 
       // Let History of 10 items
       this._history = this._history.splice(0, 10);
+
+      // Save History in Local Storage
+      localStorage.setItem('history', JSON.stringify(this._history));
     }
 
     // Make Giphy query
     this.httpClient.get<SearchGifResponse>(`https://api.giphy.com/v1/gifs/search?api_key=pQhHckU8imM19TGhpWwenIcM73uUdWMf&q=${searchValue}}&limit=10`)
       .subscribe((response) => {
 
+        // Save Results
         this.giphyResults = response.data;
+
+        // Save Results in Local Storage
+        localStorage.setItem('giphyResults', JSON.stringify(this.giphyResults));
       })
   }
 }
